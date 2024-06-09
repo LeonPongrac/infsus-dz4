@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasks</title>
+</head>
+<body>
+<h1>Pending Tasks</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Variables</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.variables}"></td>
+        <td>
+            <a th:href="@{/task/user/confirm/{id}(id=${task.id})}">Confirm</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

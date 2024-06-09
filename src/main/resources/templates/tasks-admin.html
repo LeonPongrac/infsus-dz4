@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasks</title>
+</head>
+<body>
+<h1>Pending Tasks</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Assignee</th>
+        <th>Create Time</th>
+        <th>Due Date</th>
+        <th>Variables</th>
+        <th>Form</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.assignee}"></td>
+        <td th:text="${#dates.format(task.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${task.variables}"></td>
+        <td>
+            <a th:if="${task.formKey}" th:href="${task.formKey}" target="_blank">Open Form</a>
+        </td>
+        <td>
+            <a th:href="@{/task/admin/approve/{id}(id=${task.id})}">Approve</a>
+            <a th:href="@{/task/admin/reject/{id}(id=${task.id})}">Reject</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

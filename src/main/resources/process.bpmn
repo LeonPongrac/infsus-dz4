@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0">
+  <bpmn:process id="dz4-process" name="Prijava Standa" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="obradaPrijave" />
+    <bpmn:endEvent id="EndEvent_0x6ir2l">
+      <bpmn:incoming>Flow_005yte8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="obradaPrijave" name="Obradi prijavu" camunda:assignee="admin" camunda:candidateUsers="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="name" type="string" />
+          <camunda:formField id="email" label="email" type="string" />
+          <camunda:formField id="phone" label="phone" type="string" />
+          <camunda:formField id="boothNumber" label="boothNumber" type="long" />
+          <camunda:formField id="boothName" label="boothName" type="string" />
+          <camunda:formField id="boothDetails" label="boothDetails" type="string" />
+          <camunda:formField id="approved" label="approved" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
+      <bpmn:outgoing>Flow_00k7305</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_1" name="Poslana je prijava">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="name" type="string" />
+          <camunda:formField id="email" label="email" type="string" />
+          <camunda:formField id="phone" label="phone" type="string" />
+          <camunda:formField id="boothNumber" label="boothNumber" type="long" />
+          <camunda:formField id="boothName" label="boothName" type="string" />
+          <camunda:formField id="boothDetails" label="boothDetails" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1jom56t" messageRef="Message_1evmlm6" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_00k7305" sourceRef="obradaPrijave" targetRef="Gateway_0za17sm" />
+    <bpmn:sequenceFlow id="Flow_005yte8" sourceRef="Activity_08738uq" targetRef="EndEvent_0x6ir2l" />
+    <bpmn:userTask id="Activity_08738uq" name="Prijava je odbrena" camunda:assignee="user">
+      <bpmn:incoming>Flow_0ojj0zc</bpmn:incoming>
+      <bpmn:outgoing>Flow_005yte8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0za17sm">
+      <bpmn:incoming>Flow_00k7305</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ojj0zc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1h6oaph</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0ojj0zc" name="Odobreno" sourceRef="Gateway_0za17sm" targetRef="Activity_08738uq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{approved==true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1h6oaph" name="Odbijeno" sourceRef="Gateway_0za17sm" targetRef="Activity_0o8hl3y">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{approved==false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Activity_0o8hl3y" name="Prijava je odbijena" camunda:assignee="user">
+      <bpmn:incoming>Flow_1h6oaph</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nsn2lp</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0tv6vn8">
+      <bpmn:incoming>Flow_0nsn2lp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0nsn2lp" sourceRef="Activity_0o8hl3y" targetRef="Event_0tv6vn8" />
+  </bpmn:process>
+  <bpmn:message id="Message_1evmlm6" name="newForm" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dz4-process">
+      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l">
+        <dc:Bounds x="802" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_08mft2c_di" bpmnElement="obradaPrijave">
+        <dc:Bounds x="290" y="227" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1j1paw7_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="249" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="154" y="292" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1oxd87t_di" bpmnElement="Activity_08738uq">
+        <dc:Bounds x="600" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0za17sm_di" bpmnElement="Gateway_0za17sm" isMarkerVisible="true">
+        <dc:Bounds x="455" y="242" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_105ik9o_di" bpmnElement="Activity_0o8hl3y">
+        <dc:Bounds x="600" y="340" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tv6vn8_di" bpmnElement="Event_0tv6vn8">
+        <dc:Bounds x="802" y="362" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
+        <di:waypoint x="215" y="267" />
+        <di:waypoint x="290" y="267" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00k7305_di" bpmnElement="Flow_00k7305">
+        <di:waypoint x="390" y="267" />
+        <di:waypoint x="455" y="267" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_005yte8_di" bpmnElement="Flow_005yte8">
+        <di:waypoint x="700" y="120" />
+        <di:waypoint x="802" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ojj0zc_di" bpmnElement="Flow_0ojj0zc">
+        <di:waypoint x="480" y="242" />
+        <di:waypoint x="480" y="120" />
+        <di:waypoint x="600" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="485" y="123" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h6oaph_di" bpmnElement="Flow_1h6oaph">
+        <di:waypoint x="480" y="292" />
+        <di:waypoint x="480" y="380" />
+        <di:waypoint x="600" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="487" y="363" width="45" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nsn2lp_di" bpmnElement="Flow_0nsn2lp">
+        <di:waypoint x="700" y="380" />
+        <di:waypoint x="802" y="380" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
