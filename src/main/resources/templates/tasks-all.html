@@ -15,7 +15,6 @@
         <th>Create Time</th>
         <th>Due Date</th>
         <th>Variables</th>
-        <th>Form</th>
     </tr>
     </thead>
     <tbody>
@@ -26,9 +25,11 @@
         <td th:text="${task.assignee}"></td>
         <td th:text="${#dates.format(task.createTime, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${task.variables}"></td>
         <td>
-            <a th:if="${task.formKey}" th:href="${task.formKey}" target="_blank">Open Form</a>
+            <ul>
+                <li th:each="var : ${task.variables.entrySet()}"
+                    th:text="${var.key + ' = ' + var.value}"></li>
+            </ul>
         </td>
     </tr>
     </tbody>

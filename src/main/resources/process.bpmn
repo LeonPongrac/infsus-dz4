@@ -67,7 +67,7 @@
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1qigc9d" sourceRef="Event_06i0p1t" targetRef="Activity_0nkuq93" />
-    <bpmn:serviceTask id="Activity_0nkuq93" name="Odbijanje prijave" camunda:delegateExpression="#{rejectApplication}">
+    <bpmn:serviceTask id="Activity_0nkuq93" name="Odbijanje prijave" camunda:delegateExpression="#{rejectApplicationService}">
       <bpmn:incoming>Flow_1qigc9d</bpmn:incoming>
       <bpmn:outgoing>Flow_0ott5i7</bpmn:outgoing>
     </bpmn:serviceTask>

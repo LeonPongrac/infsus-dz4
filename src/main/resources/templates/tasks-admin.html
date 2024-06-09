@@ -4,7 +4,7 @@
     <title>Tasks</title>
 </head>
 <body>
-<h1>Pending Tasks</h1>
+<h1>Pending Admin Tasks</h1>
 <table>
     <thead>
     <tr>
@@ -15,7 +15,6 @@
         <th>Create Time</th>
         <th>Due Date</th>
         <th>Variables</th>
-        <th>Form</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -27,9 +26,11 @@
         <td th:text="${task.assignee}"></td>
         <td th:text="${#dates.format(task.createTime, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${task.variables}"></td>
         <td>
-            <a th:if="${task.formKey}" th:href="${task.formKey}" target="_blank">Open Form</a>
+            <ul>
+                <li th:each="var : ${task.variables.entrySet()}"
+                    th:text="${var.key + ' = ' + var.value}"></li>
+            </ul>
         </td>
         <td>
             <a th:href="@{/task/admin/approve/{id}(id=${task.id})}">Approve</a>

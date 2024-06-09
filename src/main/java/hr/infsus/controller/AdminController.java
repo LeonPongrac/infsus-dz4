@@ -36,11 +36,7 @@ public class AdminController {
                     details.put("dueDate", task.getDueDate());
                     details.put("formKey", task.getFormKey());
                     Map<String, Object> variables = taskService.getVariables(task.getId());
-                    StringBuilder formattedVariables = new StringBuilder();
-                    for (Map.Entry<String, Object> entry : variables.entrySet()) {
-                        formattedVariables.append(entry.getKey()).append(" = ").append(entry.getValue()).append(", ");
-                    }
-                    details.put("variables", formattedVariables.toString());
+                    details.put("variables", variables);
                     return details;
                 })
                 .collect(Collectors.toList());

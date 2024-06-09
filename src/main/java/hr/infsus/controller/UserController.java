@@ -28,11 +28,7 @@ public class UserController {
                     details.put("id", task.getId());
                     details.put("name", task.getName());
                     Map<String, Object> variables = taskService.getVariables(task.getId());
-                    StringBuilder formattedVariables = new StringBuilder();
-                    for (Map.Entry<String, Object> entry : variables.entrySet()) {
-                        formattedVariables.append(entry.getKey()).append(" = ").append(entry.getValue()).append(", ");
-                    }
-                    details.put("variables", formattedVariables.toString());
+                    details.put("variables", variables);
                     return details;
                 })
                 .collect(Collectors.toList());
